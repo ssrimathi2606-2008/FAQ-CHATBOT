@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "category": "Account",
+    "question": "How do I create an account?",
+    "answer": "To create an account, click on the 'Sign Up' button on the top right corner, fill in your details, and verify your email address."
+  },
+  {
+    "id": 2,
+    "category": "Account",
+    "question": "How can I reset my password?",
+    "answer": "Go to the login page, click 'Forgot Password', and follow the instructions sent to your registered email."
+  },
+  {
+    "id": 3,
+    "category": "Account",
+    "question": "How do I delete my account?",
+    "answer": "To delete your account, go to Settings > Account > Delete Account. Please note this action is permanent."
+  },
+  {
+    "id": 4,
+    "category": "Orders",
+    "question": "How can I track my order?",
+    "answer": "You can track your order by visiting the 'My Orders' section and clicking on 'Track Order' next to your recent purchase."
+  },
+  {
+    "id": 5,
+    "category": "Orders",
+    "question": "What is your return policy?",
+    "answer": "We offer a 30-day return policy for unused items in original packaging. Visit our Returns page to initiate a return."
+  },
+  {
+    "id": 6,
+    "category": "Orders",
+    "question": "How do I cancel my order?",
+    "answer": "You can cancel your order within 24 hours of placing it by going to 'My Orders' and selecting 'Cancel Order'."
+  },
+  {
+    "id": 7,
+    "category": "Payments",
+    "question": "What payment methods do you accept?",
+    "answer": "We accept credit cards, debit cards, UPI, net banking, and popular digital wallets."
+  },
+  {
+    "id": 8,
+    "category": "Payments",
+    "question": "Is it safe to save my card details?",
+    "answer": "Yes, we use industry-standard encryption to securely store and process all payment information."
+  },
+  {
+    "id": 9,
+    "category": "Shipping",
+    "question": "How long does shipping take?",
+    "answer": "Standard shipping usually takes 3-5 business days, while express shipping takes 1-2 business days."
+  },
+  {
+    "id": 10,
+    "category": "Shipping",
+    "question": "Do you ship internationally?",
+    "answer": "Yes, we ship to over 50 countries worldwide. Shipping charges and delivery times vary by location."
+  },
+  {
+    "id": 11,
+    "category": "Support",
+    "question": "How can I contact customer support?",
+    "answer": "You can reach our support team via the Contact Us page, email at support@example.com, or live chat available 24/7."
+  },
+  {
+    "id": 12,
+    "category": "Support",
+    "question": "What are your customer support hours?",
+    "answer": "Our customer support team is available 24 hours a day, 7 days a week."
+  },
+  {
+    "id": 13,
+    "category": "General",
+    "question": "Is there a mobile app available?",
+    "answer": "Yes, our mobile app is available for both Android and iOS. You can download it from the Play Store or App Store."
+  },
+  {
+    "id": 14,
+    "category": "General",
+    "question": "How do I subscribe to the newsletter?",
+    "answer": "You can subscribe to our newsletter by entering your email in the footer section of our website."
+  },
+  {
+    "id": 15,
+    "category": "General",
+    "question": "Do you offer student discounts?",
+    "answer": "Yes, students can avail a 10% discount by verifying their student status through our partner platform."
+  }
+]

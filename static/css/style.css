@@ -1,0 +1,419 @@
+/* ==========================================================================
+   FAQ Chatbot Stylesheet
+   ==========================================================================
+   Organized into sections:
+   1. CSS Variables (theming: light + dark mode)
+   2. Global resets & base styles
+   3. Layout (app container, header, chat window, input area)
+   4. Chat bubbles & avatars
+   5. Suggested FAQs chips
+   6. Typing indicator animation
+   7. Buttons & icons
+   8. Scrollbar styling
+   9. Responsive design (mobile)
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------
+   1. CSS VARIABLES (Theming)
+   --------------------------------------------------------------------
+   Why variables? Every color in the entire stylesheet references one
+   of these variables instead of being hardcoded. This means dark mode
+   (below) only needs to redefine these same variable names, and EVERY
+   element automatically updates -- no duplicated rules needed.
+-------------------------------------------------------------------- */
+:root {
+    --bg-primary: #f4f6fb;
+    --bg-secondary: #ffffff;
+    --text-primary: #1a1d29;
+    --text-secondary: #6b7280;
+    --accent: #4f6bff;
+    --accent-hover: #3c56e0;
+    --bot-bubble-bg: #ffffff;
+    --user-bubble-bg: #4f6bff;
+    --user-bubble-text: #ffffff;
+    --bot-bubble-text: #1a1d29;
+    --border-color: #e5e7eb;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    --radius: 16px;
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Dark mode: script.js sets data-theme="dark" on #appContainer.
+   Every variable above gets redefined here -- nothing else in this
+   file needs to change to support dark mode. */
+[data-theme="dark"] {
+    --bg-primary: #14161f;
+    --bg-secondary: #1e2130;
+    --text-primary: #f1f2f6;
+    --text-secondary: #9ca3af;
+    --accent: #6d8bff;
+    --accent-hover: #8aa0ff;
+    --bot-bubble-bg: #262a3d;
+    --user-bubble-bg: #6d8bff;
+    --user-bubble-text: #ffffff;
+    --bot-bubble-text: #f1f2f6;
+    --border-color: #2e3348;
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+
+/* --------------------------------------------------------------------
+   2. GLOBAL RESETS & BASE STYLES
+-------------------------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* padding/border no longer add to element width -- avoids layout surprises */
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+
+/* --------------------------------------------------------------------
+   3. LAYOUT
+-------------------------------------------------------------------- */
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    height: 100vh;
+    max-height: 800px;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ---- Header ---- */
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.chat-header h1 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.status-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    background-color: #22c55e; /* green = "online" -- kept constant across themes intentionally */
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.header-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.icon-btn {
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.icon-btn:hover {
+    background-color: var(--bg-primary);
+}
+
+/* ---- Chat window ---- */
+.chat-window {
+    flex: 1; /* grows to fill all remaining vertical space between header and input bar */
+    overflow-y: auto; /* enables scrolling once content overflows */
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ---- Input area ---- */
+.chat-input-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+}
+
+.chat-input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.chat-input:focus {
+    border-color: var(--accent);
+}
+
+.send-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    color: #fff;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.send-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.send-btn:active {
+    transform: scale(0.92); /* subtle "press" feedback */
+}
+
+
+/* --------------------------------------------------------------------
+   4. CHAT BUBBLES & AVATARS
+   --------------------------------------------------------------------
+   script.js creates elements with these classes dynamically for every
+   message. Base class ".message" handles shared layout; ".user" / ".bot"
+   modifier classes handle the differences (alignment, colors).
+-------------------------------------------------------------------- */
+.message {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    max-width: 85%;
+    animation: fadeInUp 0.25s ease;
+}
+
+.message.user {
+    align-self: flex-end;
+    flex-direction: row-reverse; /* puts avatar on the right for user messages */
+}
+
+.message.bot {
+    align-self: flex-start;
+}
+
+.message-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    flex-shrink: 0; /* prevents avatar from shrinking when bubble text is long */
+    background-color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.message-bubble {
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.message.user .message-bubble {
+    background-color: var(--user-bubble-bg);
+    color: var(--user-bubble-text);
+    border-bottom-right-radius: 4px; /* small tail effect, common chat-app convention */
+}
+
+.message.bot .message-bubble {
+    background-color: var(--bot-bubble-bg);
+    color: var(--bot-bubble-text);
+    border: 1px solid var(--border-color);
+    border-bottom-left-radius: 4px;
+}
+
+.message-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    padding: 0 4px;
+}
+
+.message.user .message-meta {
+    justify-content: flex-end;
+}
+
+/* Copy / speak buttons shown next to bot messages */
+.message-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.message-actions button {
+    font-size: 12px;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.message-actions button:hover {
+    color: var(--accent);
+}
+
+
+/* --------------------------------------------------------------------
+   5. SUGGESTED FAQs (chips shown on page load)
+-------------------------------------------------------------------- */
+.suggested-faqs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.faq-chip {
+    font-size: 12px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    white-space: nowrap;
+}
+
+.faq-chip:hover {
+    background-color: var(--accent);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+
+/* --------------------------------------------------------------------
+   6. TYPING INDICATOR
+   --------------------------------------------------------------------
+   Three dots that pulse in sequence -- a common "bot is thinking" cue.
+-------------------------------------------------------------------- */
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 0 20px 10px 20px;
+}
+
+.typing-indicator span {
+    width: 7px;
+    height: 7px;
+    background-color: var(--text-secondary);
+    border-radius: 50%;
+    animation: typingBounce 1.2s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-5px); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* --------------------------------------------------------------------
+   7. SCROLLBAR STYLING (WebKit browsers: Chrome, Edge, Safari)
+-------------------------------------------------------------------- */
+.chat-window::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-window::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 10px;
+}
+
+
+/* --------------------------------------------------------------------
+   8. RESPONSIVE DESIGN (Mobile)
+   --------------------------------------------------------------------
+   Below 500px width, the chat app expands to fill the FULL screen
+   instead of looking like a floating card -- standard mobile chat UX.
+-------------------------------------------------------------------- */
+@media (max-width: 500px) {
+    body {
+        align-items: stretch;
+    }
+
+    .app-container {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+
+    .chat-header h1 {
+        font-size: 15px;
+    }
+}

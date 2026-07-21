@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ Chatbot</title>
+
+    <!-- Our custom stylesheet. Flask serves files under static/ automatically,
+         and url_for('static', filename=...) builds the correct path for us
+         instead of us hardcoding "/static/css/style.css" by hand. -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+    <!-- Google Font for a more modern look (optional, but nice for UI polish) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+
+    <!-- data-theme starts as "light"; script.js toggles this to "dark"
+         and CSS reacts to this attribute to restyle the whole page. -->
+    <div class="app-container" id="appContainer" data-theme="light">
+
+        <!-- ============ HEADER ============ -->
+        <header class="chat-header">
+            <div class="header-left">
+                <img src="{{ url_for('static', filename='images/bot-avatar.png') }}"
+                     alt="Bot Avatar" class="header-avatar" onerror="this.style.display='none'" />
+                <div>
+                    <h1>FAQ Assistant</h1>
+                    <span class="status-text">
+                        <span class="status-dot"></span> Online
+                    </span>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <!-- Each button has an id so script.js can attach click events -->
+                <button id="themeToggleBtn" class="icon-btn" title="Toggle dark/light mode">
+                    🌙
+                </button>
+                <button id="downloadChatBtn" class="icon-btn" title="Download chat as TXT">
+                    ⬇️
+                </button>
+                <button id="clearChatBtn" class="icon-btn" title="Clear chat">
+                    🗑️
+                </button>
+            </div>
+        </header>
+
+        <!-- ============ SUGGESTED FAQs (shown on load) ============ -->
+        <div class="suggested-faqs" id="suggestedFaqs">
+            <!-- script.js will fetch /faqs and insert clickable suggestion
+                 chips here dynamically -->
+        </div>
+
+        <!-- ============ CHAT WINDOW (scrollable message history) ============ -->
+        <main class="chat-window" id="chatWindow">
+            <!-- Chat bubbles (user + bot messages) are appended here by
+                 script.js at runtime. This div starts empty except for
+                 an initial welcome message we add via JS on page load. -->
+        </main>
+
+        <!-- ============ TYPING INDICATOR ============ -->
+        <!-- Hidden by default; script.js toggles the "hidden" class
+             on/off while waiting for the bot's response. -->
+        <div class="typing-indicator hidden" id="typingIndicator">
+            <span></span><span></span><span></span>
+        </div>
+
+        <!-- ============ INPUT AREA ============ -->
+        <footer class="chat-input-area">
+            <input
+                type="text"
+                id="userInput"
+                class="chat-input"
+                placeholder="Type your question..."
+                autocomplete="off"
+            />
+            <button id="sendBtn" class="send-btn" title="Send message">
+                ➤
+            </button>
+        </footer>
+
+    </div>
+
+    <!-- Our custom JavaScript file, loaded at the end of <body> so the
+         DOM elements above already exist by the time script.js runs. -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

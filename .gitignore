@@ -1,0 +1,22 @@
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+
+# ---- Virtual environments ----
+venv/
+env/
+.venv/
+
+# ---- NLTK downloaded data (large, regenerated automatically on first run) ----
+nltk_data/
+
+# ---- VS Code settings ----
+.vscode/
+
+# ---- OS-specific junk files ----
+.DS_Store
+Thumbs.db
+
+# ---- Environment variables (if you add secrets later) ----
+.env
